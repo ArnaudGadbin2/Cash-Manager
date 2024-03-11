@@ -24,25 +24,7 @@ $ pnpm install
 $ pnpm docker-db:rebuild
 ```
 
-2 - On another terminal run - Generate Crud:
-
-```bash
-$ pnpm generate
-```
-
-3 - To Push schema to local database:
-
-```bash
-$ pnpm sync:dev
-```
-
-3 Bis - Shortcut to generate & sync on dev environment:
-
-```bash
-$ pnpm generate:sync:dev
-```
-
-4 - Run Application:
+2 - On another terminal run - Run Application:
 
 ```bash
 $ pnpm start:dev
@@ -60,14 +42,6 @@ $ pnpm migration:dev
 
 It will ask for a file name.\
 Then commit and push the migration files.
-
-Optional:
-
-Start prisma studio
-
-```bash
-$ pnpm prisma studio
-```
 
 ## Edit the app
 
