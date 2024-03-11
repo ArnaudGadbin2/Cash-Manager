@@ -1,0 +1,51 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.foreground": "#000000",
+    "activityBar.activeBorder": "#1e8cf3",
+    "activityBar.background": "#E0234EFF",
+    "activityBar.activeForeground": "#000000",
+    "activityBar.activeBackground": "#E0234EFF",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.activeBackground": "#E0234EFF"
+  },
+  "eslint.enable": true,
+  "files.trimTrailingWhitespace": true,
+  "prettier.enable": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.eslintIntegration": true,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": false,
+  "editor.detectIndentation": true,
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": true,
+  "editor.renderControlCharacters": true,
+  "editor.renderWhitespace": "all",
+  "files.exclude": {
+    //"**/node_modules": true,
+    // "dist": true,
+    "dist-beta": true,
+    "dist-debug": true,
+    "dist-business": true,
+    "go": true,
+    "gojs_key_replace.txt": true,
+    "github_key.txt": true,
+    ".gitignore": false,
+    ".eslintignore": true,
+    ".eslintrc.js": false,
+    ".babelrc": true,
+    ".editorconfig": true,
+    ".postcssrc.js": true,
+    ".jshintrc": true,
+    "build": true,
+    "config": false
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

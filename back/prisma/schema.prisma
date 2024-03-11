@@ -1,0 +1,111 @@
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  omitInputFieldsByDefault  = "updatedAt"
+  useSimpleInputs = true
+  output   = "../prisma/generated/type-graphql"
+}
+
+// RefreshToken and Provider are used for authentication
+
+model User {
+  id                    String    @id @default(uuid())
+  email                 String    @unique
+  userName              String
+  displayName           String?
+  imageUrl              String?
+  emailConfirmed        Boolean   @default(false)
+  accessTokenExpiresUtc DateTime?
+  accessToken           String?
+  password              String?
+  oneTimePassword       String?
+  state                 String?
+  carts                 Cart[]    @relation("carts")
+  createdAt             DateTime  @default(now())
+  modifiedAt            DateTime? @updatedAt
+  createdBy             String
+  modifiedBy            String?
+
+  refreshTokenId        String?       @unique()
+  providers             Provider[]
+  refreshToken          RefreshToken?
+}
+
+model RefreshToken {
+  id            String    @id @default(uuid())
+  createdBy     String?
+  createdAt     DateTime?     @default(now())
+  modifiedBy    String?
+  modifiedAt    DateTime?     @updatedAt
+  userEmail     String    @unique()
+  refreshToken  String?
+  expiresUtc    DateTime?
+  issuedUtc     DateTime?
+  userId        String?   @unique()
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+}
+
+model Provider {
+  provider      String
+  createdBy     String?
+  createdAt     DateTime?     @default(now())
+  modifiedBy    String?
+  modifiedAt    DateTime?     @updatedAt
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+
+  @@id([provider, userId])
+}
+
+model Cart {
+  id           BigInt     @id @default(autoincrement())
+  totalPrice   Float      @default(0)
+  cartStatus   String     @default("open")
+  refusalCount Float      @default(0)
+  cartRows     CartRows[] @relation("cartRows")
+  user         User       @relation(name: "carts", fields: [userId], references: [id])
+  userId       String
+  createdBy    String
+  modifiedBy   String?
+  createdAt    DateTime   @default(now())
+  modifiedAt   DateTime?  @updatedAt
+}
+
+
+model CartRows {
+  id         BigInt    @id @default(autoincrement())
+  rowPrice   Float     @default(0)
+  quantity   Float     @default(0)
+  cart       Cart      @relation(name: "cartRows", fields: [cartId], references: [id])
+  cartId     BigInt
+  product    Product   @relation(name: "cartRows", fields: [productId], references: [id])
+  productId  BigInt
+  createdBy  String
+  modifiedBy String?
+  createdAt  DateTime  @default(now())
+  modifiedAt DateTime? @updatedAt
+}
+
+
+model Product {
+  id          BigInt     @id @default(autoincrement())
+  title       String
+  description String
+  photo       String
+  price       Float      @default(0)
+  cartRows    CartRows[] @relation("cartRows")
+  createdBy   String
+  modifiedBy  String?
+  createdAt   DateTime   @default(now())
+  modifiedAt  DateTime?  @updatedAt
+}
+
